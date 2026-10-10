@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.wavelengthflow/wavelength",
+  "title": "Wavelength",
+  "description": "Turn calls, notes, and code into process flow diagrams. Send them to Jira, Notion, and more.",
+  "version": "0.5.5",
+  "websiteUrl": "https://wavelengthflow.com/mcp.html",
+  "icons": [
+    {
+      "src": "https://wavelengthflow.com/logos/wavelength.svg",
+      "mimeType": "image/svg+xml"
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://wavelengthflow.com/api/mcp"
+    }
+  ]
+}
