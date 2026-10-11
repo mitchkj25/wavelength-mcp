@@ -68,7 +68,7 @@ Turn a transcript, call notes, or a spoken description of a process into a saved
 
 ### list_flows
 
-List the signed-in user's saved Wavelength flows, newest first. Optionally filter by a case-insensitive title query or a folder id, and limit the count. Returns per flow: id, title, updated_at, folder_id, is_public, shared (true when the user is not the owner), team, role (owner, team, editor, or viewer), and a link to open it.
+List the signed-in user's saved Wavelength flows, most recently updated first (sorted by updated_at, descending). Includes owned, shared, team, and organization flows. Optionally filter by a case-insensitive title query or a folder id, and limit the count. Returns per flow: id, title, updated_at, folder_id, is_public, shared (true when the user is not the owner), team, role (owner, team, editor, or viewer), and open_url.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -78,12 +78,12 @@ List the signed-in user's saved Wavelength flows, newest first. Optionally filte
 
 ### search_flows
 
-Full-text search the signed-in user's saved Wavelength flows by title, node labels, and transcript. Returns matches with where they matched, a transcript snippet, and a link to open each. Query must be at least 2 characters.
+Full-text search the signed-in user's saved Wavelength flows by title, node labels, and transcript. Query must be at least 2 characters. Matches are sorted by updated_at, most recent first. Returns {query, total, matches}. Each match has id, title, updated_at, folder_id, shared, matched_in (an array with one or more of title, nodes, transcript), matched_nodes (id, label, type), transcript_snippet, and open_url.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `query` | string | yes | The search query, at least 2 characters. |
-| `limit` | integer | no | Maximum number of matches to return, 1 to 100. Defaults to 20. |
+| `limit` | integer | no | Maximum number of matches to return, 1 to 50. Defaults to 20. Values above 50 are capped at 50. |
 
 ### get_flow
 
@@ -187,7 +187,7 @@ Compare two saved versions of a Wavelength flow, or one version against the curr
 
 ### get_account
 
-Return the signed-in user's current plan, saved flow count, trial end date, flows created this month, folder limit and personal folder count, and mic time usage.
+Return the signed-in user's email, current plan, saved flow count, trial end date, flows created this month, folder limit and personal folder count, and mic time usage.
 
 No parameters.
 
@@ -219,7 +219,7 @@ Turn off the public read-only link for a Wavelength flow. The link stops working
 
 ### export_flow
 
-Export a saved Wavelength flow in the requested format. mermaid returns a Mermaid flowchart string. json returns the title, graph_nodes, and graph_edges. svg returns a self-contained SVG with node shapes, colors, and arrows. drawio returns a valid mxfile/mxGraphModel XML for draw.io. SVG and drawio use stored node positions, or auto-layout when the flow has none. No flow content is sent to any third-party service.
+Export a saved Wavelength flow in the requested format. mermaid returns a Mermaid flowchart string. json returns the title, graph_nodes, and graph_edges. svg returns a self-contained SVG with node shapes, colors, and arrows. drawio returns a valid mxfile/mxGraphModel XML for draw.io. SVG and drawio use stored node positions, or auto-layout when the flow has none. No flow content is sent to any third-party service. Returns {flow_id, format} plus one key with the content: mermaid, svg, or drawio. For json it returns {flow_id, format, title, graph_nodes, graph_edges}.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -452,7 +452,7 @@ Group a list of notes (for example sticky notes from a workshop) by theme. Every
 
 ### notes_to_flow
 
-Turn a list of notes (for example sticky notes from a workshop) into a process flow and save it as a new flow. Only facts in the notes are used. Notes that are not process facts (questions, opinions, risks) are left out. The notes are saved as the transcript of the flow. Uses one AI help call from the plan. Returns the new flow_id and open_url.
+Turn a list of notes (for example sticky notes from a workshop) into a process flow and save it as a new flow. Only facts in the notes are used. Notes that are not process facts (questions, opinions, risks) are left out. The notes are saved as the transcript of the flow. Uses one AI help call from the plan. Returns {flow_id, title, open_url}.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -592,7 +592,7 @@ No parameters.
 
 ### send_flow_to_channel
 
-Post a flow to a Slack, Microsoft Teams, Google Chat, or Discord channel, or to a webhook. The message has the flow title, a short summary, questions to confirm, and a link to the flow. A webhook also gets the steps, links, and Mermaid code as JSON. The link is the public link when the flow is shared, otherwise the private app link. Get the channel_id from list_channels.
+Post a flow to a Slack, Microsoft Teams, Google Chat, or Discord channel, or to a webhook. The message has the flow title, a short summary, questions to confirm, and a link to the flow. A webhook also gets the steps, links, and Mermaid code as JSON. The link is the public link when the flow is shared, otherwise the private app link. Get the channel_id from list_channels. Returns {flow_id, channel_id, sent, status, link}. status is the HTTP status code that the destination returned.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
