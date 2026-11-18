@@ -586,7 +586,7 @@ Move a flow into an organization so every member can open it, or out of it (org_
 
 ### list_channels
 
-List the chat channels and webhooks the user set up in Wavelength: Slack, Microsoft Teams, Google Chat, Discord, and generic webhooks (Zapier, Make, n8n). Returns {channels: [{channel_id, label, kind, kind_name, url_hint, last_sent_at, last_status}]}. kind is the machine name (slack, teams, gchat, discord, generic). kind_name is the display name (Slack, Microsoft Teams, Google Chat, Discord, Webhook). Use the channel_id with send_flow_to_channel.
+List the chat channels and webhooks the user set up in Wavelength: Slack, Microsoft Teams, Google Chat, Discord, and generic webhooks (Zapier, Make, n8n). Returns {channels: [{channel_id, label, kind, kind_name, url_hint, last_sent_at, last_status}]}. kind is the machine name (for example slack, discord, generic). kind_name is the display name (for example Slack, Discord, Webhook). Use the channel_id with send_flow_to_channel.
 
 No parameters.
 
