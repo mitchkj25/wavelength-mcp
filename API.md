@@ -452,7 +452,7 @@ Group a list of notes (for example sticky notes from a workshop) by theme. Every
 
 ### notes_to_flow
 
-Turn a list of notes (for example sticky notes from a workshop) into a process flow and save it as a new flow. Only facts in the notes are used. Notes that are not process facts (questions, opinions, risks) are left out. The notes are saved as the transcript of the flow. Uses one AI help call from the plan. Returns {flow_id, title, open_url}.
+Turn a list of notes (for example sticky notes from a workshop) into a process flow and save it as a new flow. Only facts in the notes are used. Notes that are not process facts (questions, opinions, risks) are left out. The notes are saved as the transcript of the flow. Uses one AI help call from the plan. Returns {flow_id, title, node_count, edge_count, node_labels, open_url}.
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
@@ -586,7 +586,7 @@ Move a flow into an organization so every member can open it, or out of it (org_
 
 ### list_channels
 
-List the chat channels and webhooks the user set up in Wavelength: Slack, Microsoft Teams, Google Chat, Discord, and generic webhooks (Zapier, Make, n8n). Returns each channel_id, label, kind, and last delivery status. Use the channel_id with send_flow_to_channel.
+List the chat channels and webhooks the user set up in Wavelength: Slack, Microsoft Teams, Google Chat, Discord, and generic webhooks (Zapier, Make, n8n). Returns {channels: [{channel_id, label, kind, kind_name, url_hint, last_sent_at, last_status}]}. kind is the machine name (slack, teams, gchat, discord, generic). kind_name is the display name (Slack, Microsoft Teams, Google Chat, Discord, Webhook). Use the channel_id with send_flow_to_channel.
 
 No parameters.
 
